@@ -5,8 +5,11 @@ import 'express-async-errors';
 import morgan from 'morgan';
 import { loggerMiddleware } from './presentation/middlewares/logger.middleware.js';
 import noteRoutes from './presentation/routes/note.routes.js';
+import authRoutes from './presentation/routes/auth.routes.js';
 import { connectMongo } from './infraestructure/database/mongo/connection.js';
 import { connectMysql } from './infraestructure/database/mysql/connection.js';
+import { setup } from 'swagger-ui-express';
+import { setupSwagger } from './infraestructure/config/swagger.config.js';
  
 await connectMongo();
 //await connectMysql();
@@ -15,12 +18,14 @@ const app = express();
  
 app.use(cors());
 app.use(express.json());
+setupSwagger(app);
 app.use(loggerMiddleware);
 app.use(morgan('dev'));
  
 //imagenes estaticas
 app.use('/uploads', express.static('uploads'));
-app.use('/api/v1/notes',noteRoutes);
+app.use('/api/v1/auth', authRoutes);
+app.use('/api/v1/notes', noteRoutes);
  
 app.get('/api/health', (req, res) => {
     res.status(200).json({ status: 'OK',message: 'API de notas activa' });
