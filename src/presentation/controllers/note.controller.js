@@ -28,10 +28,12 @@ export default class NoteController {
     updateNote = async (req, res) => {
         const { id } = req.params;
         const data = req.body;
+        const userId = req.user.id;
+
         if (req.file) data.imageUrl = '/uploads/' + req.file.filename;
         
         try {
-            const note = await this.noteService.updateNote(id, data);
+            const note = await this.noteService.updateNote(id, data, userId);
             res.status(200).json(note);
         } catch (error) {
             res.status(404).json({ error: error.message });
@@ -41,7 +43,8 @@ export default class NoteController {
     deleteNote = async (req, res) => {
         const { id } = req.params;
         try {
-            const result = await this.noteService.deleteNote(id);
+            const userId = req.user.id;
+            const result = await this.noteService.deleteNote(id, userId);
             res.status(200).json(result);
         } catch (error) {
             res.status(404).json({ error: error.message });
