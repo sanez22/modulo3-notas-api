@@ -12,7 +12,7 @@ import { setup } from 'swagger-ui-express';
 import { setupSwagger } from './infraestructure/config/swagger.config.js';
  
 await connectMongo();
-//await connectMysql();
+await connectMysql();
  
 const app = express();
  
