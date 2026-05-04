@@ -18,27 +18,15 @@ export default class NoteService {
         return await this.noteRepository.findByUserId(userId);
     }
 
-    async updateNote(id, data, currentUserId) {
-        const note = await this.noteRepository.findById(id);
+    async updateNote(id, data) {
+        const note = await this.noteRepository.update(id, data);
         if (!note) throw new Error("Note not found");
-
-        if (note.userId !== currentUserId) {
-            throw new Error("Unauthorized");
-        }
-
-        return await this.noteRepository.update(id, data);
+        return note;
     }
 
-    async deleteNote(id, currentUserId) {
-        const note = await this.noteRepository.findById(id);
+    async deleteNote(id) {
+        const note = await this.noteRepository.delete(id);
         if (!note) throw new Error("Note not found");
-
-        if (note.userId !== currentUserId) {
-            throw new Error ("Unauthorized");
-        }
-
-        await this.noteRepository.delete(id);
-
         return { message: "Note deleted successfully" };
     }
 

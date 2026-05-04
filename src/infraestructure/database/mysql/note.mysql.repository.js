@@ -1,4 +1,6 @@
 import NoteModel from "./note.model.js";
+import { DataTypes } from "sequelize";
+import sequelize from "./connection.js";
 
 export default class NoteMySQLRepository {
     async save(noteEntity) {
