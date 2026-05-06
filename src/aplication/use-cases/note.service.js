@@ -41,4 +41,18 @@ export default class NoteService {
 
         return await this.mailService.sendNoteEmail(targetEmail, note);
     }
+
+    async getPublicNoteById(id) {
+        const note = await this.noteRepository.findById(id);
+
+        if (!note) {
+            throw new Error("Note not found");
+        }
+
+        if (note.isPrivate) {
+            throw new Error("Private note");
+        }
+
+        return note;
+    }
 }

@@ -51,6 +51,32 @@ router.get("/", authMiddleware, noteController.getNotesByUserId);
 
 /**
  * @swagger
+ * /notes/{id}/public:
+ *   get:
+ *     summary: Obtener una nota pública sin autenticación
+ *     description: Permite consultar una nota sin JWT solo si no es privada.
+ *     tags: [Notes]
+ *     security: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: ID de la nota
+ *     responses:
+ *       200:
+ *         description: Nota pública obtenida exitosamente
+ *       403:
+ *         description: La nota es privada
+ *       404:
+ *         description: Nota no encontrada
+ */
+
+router.get("/:id/public", noteController.getPublicNoteById);
+
+/**
+ * @swagger
  * /notes/{id}:
  *   put:
  *     summary: Actualizar una nota por ID
@@ -97,6 +123,7 @@ router.get("/", authMiddleware, noteController.getNotesByUserId);
  *       404:
  *         description: Nota no encontrada
  */
+
 router.put("/:id", authMiddleware, upload.single("image"), noteController.updateNote);
 
 /**

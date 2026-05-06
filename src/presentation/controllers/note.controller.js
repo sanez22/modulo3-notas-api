@@ -113,4 +113,25 @@ export default class NoteController {
             });
         }
     }
+
+    getPublicNoteById = async (req, res) => {
+        const { id } = req.params;
+
+        try {
+            const note = await this.noteService.getPublicNoteById(id);
+
+            res.status(200).json({
+                success: true,
+                message: "Public note retrieved successfully",
+                data: note
+            });
+        } catch (error) {
+            const statusCode = error.message === "Private note" ? 403 : 404;
+
+            res.status(statusCode).json({
+                success: false,
+                message: error.message
+            });
+        }
+    }
 }

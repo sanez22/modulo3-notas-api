@@ -10,7 +10,8 @@ export default class NoteMySQLRepository {
             imageUrl: noteEntity.imageUrl,
             isPrivate: noteEntity.isPrivate,
             password: noteEntity.password,
-            userId: noteEntity.userId
+            userId: noteEntity.userId,
+            categoryId: noteEntity.categoryId
         });
         return note.toJSON();
     }
