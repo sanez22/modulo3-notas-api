@@ -1,7 +1,8 @@
-import CategoryService from "../../src/aplication/use-cases/category.service.js";
+import { jest } from "@jest/globals";
+import CategoryService from "../../aplication/use-cases/category.service.js";
 
 describe("CategoryService", () => {
-    Test("should create a category successfully", async () => {
+    test("should create a category successfully", async () => {
         const mockCategoryRepository = {
             save: jest.fn().mockResolvedValue({
                 id: 1,

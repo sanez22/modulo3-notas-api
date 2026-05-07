@@ -28,11 +28,7 @@ export default class NoteController {
 
         try {
             const notes = await this.noteService.getNotesByUserId(userId);
-            res.status(200).json({
-                success: true,
-                message: "Notes retrieved successfully",
-                data: notes
-            });
+            res.status(200).json(notes);
         } catch (error) {
             res.status(500).json({
                 success: false,

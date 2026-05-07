@@ -29,7 +29,7 @@ app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/notes', noteRoutes);
 app.use('/api/v1/categories', categoryRoutes);
  
-app.get('/api/health', (req, res) => {
+app.get('/api/v1/health', (req, res) => {
     res.status(200).json({ status: 'OK',message: 'API de notas activa' });
 });
  
@@ -47,3 +47,11 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Servidor escuchando en el puerto ${PORT}`);
 });
+
+if (process.env.NODE_ENV !== "test") {
+    app.listen(PORT, () => {
+        console.log(`Servidor escuchando en el puerto ${PORT}`);
+    });
+}
+
+export default app;
